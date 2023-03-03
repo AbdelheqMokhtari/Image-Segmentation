@@ -14,15 +14,16 @@ _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
 
 # Apply connected component analysis
 n_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(thresh)
-
+j = 0
 # Loop over each seed and crop it
 for i in range(1, n_labels):
     # Get the bounding box coordinates
     x, y, w, h, area = stats[i]
 
     # Crop the region from the original image
-    if 10 < area:
+    if 50 < area:
+        j = j + 1
         seed = img[y:y+h, x:x+w]
         print(i)
         # Save the cropped seed image
-        cv2.imwrite(f'data/seed_{i}.png', seed)
+        cv2.imwrite(f'data/seed_{j}.png', seed)
